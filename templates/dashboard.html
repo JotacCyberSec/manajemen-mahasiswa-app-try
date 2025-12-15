@@ -1,0 +1,115 @@
+{% extends "base_dashboard.html" %}
+{% block content %}
+
+<div class="mb-4">
+  <h3 class="fw-bold mb-1">Dashboard</h3>
+  <p class="text-muted mb-0">Ringkasan data & analisis mahasiswa</p>
+</div>
+
+<!-- STAT CARDS -->
+<div class="row g-3 mb-4">
+
+  <div class="col-6 col-lg-3">
+    <div class="card p-3 text-center">
+      <div class="fw-bold fs-4 text-primary">{{ stats.total }}</div>
+      <div class="text-muted small">Total Mahasiswa</div>
+    </div>
+  </div>
+
+  <div class="col-6 col-lg-3">
+    <div class="card p-3 text-center">
+      <div class="fw-bold fs-4 text-primary">{{ stats.jurusan }}</div>
+      <div class="text-muted small">Total Jurusan</div>
+    </div>
+  </div>
+
+  <div class="col-6 col-lg-3">
+    <div class="card p-3 text-center">
+      <div class="fw-bold fs-4 text-primary">{{ stats.avg_nim }}</div>
+      <div class="text-muted small">Rata-rata Panjang NIM</div>
+    </div>
+  </div>
+
+  <div class="col-6 col-lg-3">
+    <div class="card p-3 text-center">
+      <div class="fw-bold fs-6 text-primary">{{ stats.last_update }}</div>
+      <div class="text-muted small">Update Terakhir</div>
+    </div>
+  </div>
+
+</div>
+
+<!-- SEARCH + DARK MODE -->
+<div class="card p-4 mb-4">
+  <div class="row g-3 align-items-center">
+    <div class="col-md-8">
+      <input id="searchInput" class="form-control"
+             placeholder="🔍 Cari NIM atau Nama (Linear Search O(n))">
+    </div>
+    <div class="col-md-4 text-md-end">
+      <button onclick="toggleDark()" class="btn btn-outline-dark rounded-pill">
+        🌙 Dark Mode
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- SEARCH RESULT -->
+<div class="card p-4 mb-4">
+  <h6 class="fw-bold mb-3">Hasil Pencarian</h6>
+
+  <div class="table-responsive">
+    <table class="table table-hover align-middle">
+      <thead>
+        <tr>
+          <th>NIM</th>
+          <th>Nama</th>
+          <th>Email</th>
+          <th>Jurusan</th>
+        </tr>
+      </thead>
+      <tbody id="searchTable">
+        {% for s in students %}
+        <tr>
+          <td>{{ s.nim }}</td>
+          <td>{{ s.name }}</td>
+          <td>{{ s.email }}</td>
+          <td>{{ s.major }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ALGORITHM INFO -->
+<div class="card p-4">
+  <h6 class="fw-bold mb-2">🧠 Informasi Algoritma</h6>
+  <ul class="mb-0 small">
+    <li>Pencarian Data: <b>Linear Search</b> → O(n)</li>
+    <li>Sorting Data: <b>Merge Sort</b> → O(n log n)</li>
+    <li>File I/O (JSON): O(n)</li>
+  </ul>
+</div>
+
+<script>
+/* SEARCH (LINEAR SEARCH SIMULATION) */
+document.getElementById("searchInput").addEventListener("keyup", function() {
+  const q = this.value.toLowerCase();
+  document.querySelectorAll("#searchTable tr").forEach(row => {
+    row.style.display = row.innerText.toLowerCase().includes(q) ? "" : "none";
+  });
+});
+
+/* DARK MODE */
+function toggleDark() {
+  document.body.classList.toggle("dark");
+  localStorage.setItem("darkMode", document.body.classList.contains("dark"));
+}
+
+if (localStorage.getItem("darkMode") === "true") {
+  document.body.classList.add("dark");
+}
+</script>
+
+{% endblock %}

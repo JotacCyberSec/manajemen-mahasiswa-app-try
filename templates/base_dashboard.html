@@ -1,0 +1,248 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <title>Manajemen Mahasiswa</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Bootstrap -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+
+  <style>
+    :root{
+      --primary:#0d47a1;
+      --primary-dark:#08306b;
+      --bg:#f4f7fb;
+      --card:#ffffff;
+      --text:#1f2937;
+      --muted:#6b7280;
+    }
+
+    body{
+      background:var(--bg);
+      color:var(--text);
+      font-family:system-ui,-apple-system,"Segoe UI",sans-serif;
+      overflow-x:hidden;
+    }
+
+    /* ================= TOPBAR ================= */
+    .topbar{
+      height:56px;
+      background:linear-gradient(90deg,var(--primary),#1565c0);
+      color:#fff;
+      display:flex;
+      align-items:center;
+      padding:0 1rem;
+      position:sticky;
+      top:0;
+      z-index:1200;
+      box-shadow:0 4px 12px rgba(0,0,0,.15);
+    }
+
+    .topbar-title{
+      flex:1;
+      text-align:center;
+      font-weight:600;
+      letter-spacing:.5px;
+    }
+
+    .topbar button{
+      border:none;
+      background:none;
+      color:white;
+      font-size:1.3rem;
+    }
+
+    /* ================= SIDEBAR ================= */
+    #sidebar{
+      background:linear-gradient(180deg,var(--primary),var(--primary-dark));
+      color:white;
+      min-height:calc(100vh - 56px);
+      transition:transform .3s ease;
+      z-index:1100;
+    }
+
+    #sidebar.hide{
+      transform:translateX(-100%);
+    }
+
+    .sidebar a{
+      color:white;
+      text-decoration:none;
+      padding:12px 14px;
+      display:flex;
+      align-items:center;
+      gap:10px;
+      border-radius:12px;
+      margin-bottom:6px;
+      font-size:.95rem;
+    }
+
+    .sidebar a:hover,
+    .sidebar a.active{
+      background:rgba(255,255,255,.18);
+    }
+
+    .sidebar hr{
+      border-color:rgba(255,255,255,.25);
+    }
+
+    /* ================= OVERLAY (MOBILE ONLY) ================= */
+    #overlay{
+      position:fixed;
+      inset:0;
+      background:rgba(0,0,0,.45);
+      display:none;
+      z-index:1050;
+      pointer-events:none;
+    }
+
+    #overlay.show{
+      display:block;
+      pointer-events:auto;
+    }
+
+    /* Desktop: overlay MATI TOTAL */
+    @media(min-width:768px){
+      #overlay{
+        display:none!important;
+        pointer-events:none!important;
+      }
+    }
+
+    /* Mobile sidebar */
+    @media(max-width:767px){
+      #sidebar{
+        position:fixed;
+        top:56px;
+        left:0;
+        width:260px;
+        height:calc(100vh - 56px);
+        padding:1rem;
+      }
+    }
+
+    /* ================= CONTENT ================= */
+    .content{
+      padding:1.5rem;
+    }
+
+    .card{
+      border-radius:18px;
+      border:none;
+      box-shadow:0 10px 30px rgba(0,0,0,.08);
+    }
+
+    .stat-card{
+      text-align:center;
+      padding:1.2rem;
+    }
+
+    .stat-value{
+      font-size:1.6rem;
+      font-weight:700;
+      color:#2563eb;
+    }
+
+    .badge-major{
+      background:#dbeafe;
+      color:#1d4ed8;
+      border-radius:999px;
+      padding:.3rem .6rem;
+      font-size:.8rem;
+    }
+  </style>
+</head>
+
+<body>
+
+<!-- OVERLAY -->
+<div id="overlay" onclick="toggleSidebar()"></div>
+
+<!-- TOPBAR -->
+<div class="topbar">
+  <button onclick="toggleSidebar()">☰</button>
+  <div class="topbar-title">UNIVERSITAS PAMULANG</div>
+  <button title="Dark mode (coming soon)">🌙</button>
+</div>
+
+<div class="container-fluid">
+  <div class="row">
+
+    <!-- SIDEBAR -->
+    <aside id="sidebar" class="col-md-3 col-lg-2 sidebar p-3">
+      <h5 class="fw-bold mb-4">🎓 UNPAM</h5>
+
+      <a href="/dashboard" class="active">
+        <i class="bi bi-speedometer2"></i> Dashboard
+      </a>
+      <a href="/mahasiswa">
+        <i class="bi bi-table"></i> Data Mahasiswa
+      </a>
+      <a href="/add">
+        <i class="bi bi-plus-circle"></i> Tambah Data
+      </a>
+
+      <hr>
+
+      <a href="/export/csv">
+        <i class="bi bi-filetype-csv"></i> Export CSV
+      </a>
+      <a href="/export/excel">
+        <i class="bi bi-file-earmark-excel"></i> Export Excel
+      </a>
+
+      <form action="/import/csv" method="post" enctype="multipart/form-data" class="mt-3">
+        <input type="file" name="file" class="form-control form-control-sm mb-2" required>
+        <button class="btn btn-success btn-sm w-100">Import CSV</button>
+      </form>
+
+      <form action="/import/excel" method="post" enctype="multipart/form-data" class="mt-2">
+        <input type="file" name="file" class="form-control form-control-sm mb-2" required>
+        <button class="btn btn-primary btn-sm w-100">Import Excel</button>
+      </form>
+
+      <hr>
+
+      <a href="/logout" class="text-danger">
+        <i class="bi bi-box-arrow-right"></i> Logout
+      </a>
+    </aside>
+
+    <!-- CONTENT -->
+    <main class="col-md-9 col-lg-10 content">
+      {% block content %}{% endblock %}
+    </main>
+
+  </div>
+</div>
+
+<script>
+function toggleSidebar(){
+  const sidebar = document.getElementById("sidebar");
+  const overlay = document.getElementById("overlay");
+
+  sidebar.classList.toggle("hide");
+
+  if(window.innerWidth < 768){
+    overlay.classList.toggle("show");
+  }
+}
+
+/* Initial state */
+window.addEventListener("load", ()=>{
+  const sidebar = document.getElementById("sidebar");
+  const overlay = document.getElementById("overlay");
+
+  if(window.innerWidth < 768){
+    sidebar.classList.add("hide");
+  }else{
+    sidebar.classList.remove("hide");
+    overlay.classList.remove("show");
+  }
+});
+</script>
+
+</body>
+</html>

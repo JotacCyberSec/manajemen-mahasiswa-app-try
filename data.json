@@ -1,0 +1,16 @@
+{
+  "students": [
+    {
+      "nim": "241011401799",
+      "name": "Abdul Muiz",
+      "email": "abdulmuiz@gmail.com",
+      "major": "teknik infomatika"
+    },
+    {
+      "nim": "241011401798",
+      "name": "Dastin",
+      "email": "dastin@gmail.com",
+      "major": "teknik infomatika"
+    }
+  ]
+}
