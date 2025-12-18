@@ -1,5 +1,5 @@
 from flask import (
-    Flask, render_template, request,
+    Flask, render_template, request, flash,
     redirect, url_for, session, send_file
 )
 import json, csv, io
@@ -28,14 +28,25 @@ def login_required(f):
         return f(*a, **k)
     return wrap
 
+
 @app.route("/login", methods=["GET", "POST"])
 def login():
     if request.method == "POST":
+        username = request.form["username"]
+        password = request.form["password"]
+
         for u in load_users():
-            if u["username"] == request.form["username"] and u["password"] == request.form["password"]:
+            if u["username"] == username and u["password"] == password:
                 session["user"] = u["username"]
                 return redirect("/dashboard")
+
+        # Jika tidak ada yang cocok
+        flash("Username atau password salah!", "danger")
+        return redirect("/login")
+
     return render_template("login.html")
+
+
 
 @app.route("/logout")
 def logout():

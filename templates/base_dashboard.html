@@ -2,10 +2,10 @@
 <html lang="id">
 <head>
   <meta charset="utf-8">
-  <title>Manajemen Mahasiswa</title>
+  <title>Dashboard | Manajemen Mahasiswa</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <!-- Bootstrap -->
+  <!-- Bootstrap & Icons -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
 
@@ -37,7 +37,7 @@
       position:sticky;
       top:0;
       z-index:1200;
-      box-shadow:0 4px 12px rgba(0,0,0,.15);
+      box-shadow:0 4px 14px rgba(0,0,0,.18);
     }
 
     .topbar-title{
@@ -77,6 +77,7 @@
       border-radius:12px;
       margin-bottom:6px;
       font-size:.95rem;
+      transition:.2s;
     }
 
     .sidebar a:hover,
@@ -88,30 +89,23 @@
       border-color:rgba(255,255,255,.25);
     }
 
-    /* ================= OVERLAY (MOBILE ONLY) ================= */
+    /* ================= OVERLAY ================= */
     #overlay{
       position:fixed;
       inset:0;
       background:rgba(0,0,0,.45);
       display:none;
       z-index:1050;
-      pointer-events:none;
     }
 
     #overlay.show{
       display:block;
-      pointer-events:auto;
     }
 
-    /* Desktop: overlay MATI TOTAL */
     @media(min-width:768px){
-      #overlay{
-        display:none!important;
-        pointer-events:none!important;
-      }
+      #overlay{display:none!important;}
     }
 
-    /* Mobile sidebar */
     @media(max-width:767px){
       #sidebar{
         position:fixed;
@@ -128,16 +122,42 @@
       padding:1.5rem;
     }
 
+    /* ================= CARD ================= */
     .card{
-      border-radius:18px;
+      border-radius:20px;
       border:none;
-      box-shadow:0 10px 30px rgba(0,0,0,.08);
+      background:linear-gradient(180deg,#fff,#f9fbff);
+      box-shadow:0 14px 35px rgba(0,0,0,.08);
+      transition:.2s;
     }
 
-    .stat-card{
-      text-align:center;
-      padding:1.2rem;
+    .card:hover{
+      transform:translateY(-4px);
+      box-shadow:0 20px 45px rgba(0,0,0,.12);
     }
+
+    /* ================= STAT CARD ================= */
+    .stat-card{
+      display:flex;
+      align-items:center;
+      gap:16px;
+    }
+
+    .stat-icon{
+      width:54px;
+      height:54px;
+      border-radius:16px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-size:1.4rem;
+      color:white;
+    }
+
+    .bg-blue{background:linear-gradient(135deg,#2563eb,#1d4ed8);}
+    .bg-green{background:linear-gradient(135deg,#16a34a,#15803d);}
+    .bg-purple{background:linear-gradient(135deg,#7c3aed,#6d28d9);}
+    .bg-orange{background:linear-gradient(135deg,#f97316,#ea580c);}
 
     .stat-value{
       font-size:1.6rem;
@@ -145,13 +165,363 @@
       color:#2563eb;
     }
 
-    .badge-major{
-      background:#dbeafe;
-      color:#1d4ed8;
-      border-radius:999px;
-      padding:.3rem .6rem;
-      font-size:.8rem;
+    /* ================= SEARCH ================= */
+    .search-box{
+      position:relative;
     }
+
+    .search-box input{
+      border-radius:999px;
+      padding-left:46px;
+    }
+
+    .search-box i{
+      position:absolute;
+      left:18px;
+      top:50%;
+      transform:translateY(-50%);
+      color:#64748b;
+    }
+
+    /* ================= TABLE ================= */
+    .table thead th{
+      font-size:.75rem;
+      text-transform:uppercase;
+      letter-spacing:.08em;
+      color:#475569;
+      white-space:nowrap;
+    }
+
+    /* ================= DARK MODE ================= */
+    body.dark{
+      background:#0f172a;
+      color:#e5e7eb;
+    }
+
+    body.dark .card{
+      background:#1e293b;
+      color:#e5e7eb;
+    }
+
+    body.dark .table{
+      color:#e5e7eb;
+    }
+
+        /* ================= DARK MODE FIX ================= */
+    body.dark {
+      background: #0b1220;
+      color: #e5e7eb;
+    }
+
+    /* CARD */
+    body.dark .card {
+      background: linear-gradient(180deg, #1e293b, #0f172a);
+      color: #e5e7eb;
+      box-shadow: 0 20px 40px rgba(0,0,0,.6);
+    }
+
+    /* STAT VALUE */
+    body.dark .stat-value {
+      color: #60a5fa; /* biru terang */
+    }
+
+    /* LABEL */
+    body.dark .text-muted {
+      color: #94a3b8 !important;
+    }
+
+    /* SEARCH INPUT */
+    body.dark .search-box input {
+      background: #020617;
+      color: #e5e7eb;
+      border: 1px solid #334155;
+    }
+
+    body.dark .search-box input::placeholder {
+      color: #64748b;
+    }
+
+    /* TABLE */
+    body.dark .table {
+      color: #e5e7eb;
+    }
+
+    body.dark .table thead th {
+      color: #93c5fd;
+      border-color: #334155;
+    }
+
+    body.dark .table tbody td {
+      border-color: #334155;
+    }
+
+    /* BADGE JURUSAN */
+    body.dark .badge {
+      background: #1d4ed8 !important;
+      color: #e0e7ff !important;
+    }
+
+    /* ALGORITHM INFO ICON */
+    body.dark code {
+      background: #020617;
+      color: #93c5fd;
+      padding: 2px 6px;
+      border-radius: 6px;
+    }
+
+    /* ================= DARK MODE TABLE ROW HOVER ================= */
+    body.dark .table tbody tr {
+      transition: background .2s ease;
+    }
+
+    body.dark .table tbody tr:hover {
+      background: rgba(59,130,246,.08); /* biru tipis */
+    }
+
+    /* ================= SIDEBAR IMPORT MODERN ================= */
+    .sidebar .import-box {
+      background: rgba(255,255,255,.08);
+      border-radius: 14px;
+      padding: 10px;
+      margin-bottom: 10px;
+    }
+
+    .sidebar .import-box input[type="file"] {
+      display: none;
+    }
+
+    .sidebar .file-label {
+      display: block;
+      width: 100%;
+      padding: 8px 10px;
+      background: rgba(255,255,255,.15);
+      color: #fff;
+      border-radius: 10px;
+      font-size: .8rem;
+      cursor: pointer;
+      text-align: center;
+      margin-bottom: 6px;
+    }
+
+    .sidebar .file-label:hover {
+      background: rgba(255,255,255,.25);
+    }
+
+    .sidebar .btn-import {
+      width: 100%;
+      border-radius: 10px;
+      font-size: .8rem;
+      font-weight: 600;
+    }
+
+    .sidebar .btn-import.csv {
+      background: linear-gradient(135deg,#16a34a,#15803d);
+      color: #fff;
+      border: none;
+    }
+
+    .sidebar .btn-import.excel {
+      background: linear-gradient(135deg,#2563eb,#1d4ed8);
+      color: #fff;
+      border: none;
+    }
+
+
+    /* ================= DARK MODE TABLE – FINAL MODERN ================= */
+
+    /* Card container */
+    body.dark .card {
+      background: linear-gradient(180deg, #1e293b, #0b1220);
+    }
+
+    /* Table wrapper */
+    body.dark .table-responsive {
+      background: transparent;
+    }
+
+    /* Table base */
+    body.dark table.table {
+      background: transparent !important;
+      color: #e5e7eb;
+      border-collapse: separate;
+      border-spacing: 0 6px;
+    }
+
+    /* Header row */
+    body.dark table.table thead tr {
+      background: rgba(30,41,59,.9);
+    }
+
+    /* Header cell */
+    body.dark table.table thead th {
+      background: transparent;
+      color: #93c5fd;
+      font-weight: 600;
+      border: none;
+      padding: 12px 16px;
+    }
+
+    /* Body row */
+    body.dark table.table tbody tr {
+      background: linear-gradient(180deg,#0f172a,#020617);
+      border-radius: 10px;
+      transition: all .2s ease;
+    }
+
+    /* Hover */
+    body.dark table.table tbody tr:hover {
+      background: linear-gradient(180deg,#1e40af,#020617);
+      transform: scale(1.01);
+    }
+
+    /* Cell */
+    body.dark table.table tbody td {
+      background: transparent;
+      border: none;
+      padding: 12px 16px;
+      vertical-align: middle;
+    }
+
+    /* NIM highlight */
+    body.dark table.table tbody td:first-child {
+      color: #bfdbfe;
+      font-weight: 600;
+    }
+
+    /* Badge jurusan */
+    body.dark .badge {
+      background: linear-gradient(135deg,#2563eb,#1d4ed8) !important;
+      color: #e0e7ff !important;
+      border-radius: 999px;
+      padding: 6px 14px;
+      font-size: .75rem;
+      box-shadow: 0 0 0 3px rgba(37,99,235,.25);
+    }
+
+    /* Mobile spacing */
+    @media (max-width: 768px) {
+      body.dark table.table tbody tr {
+        margin-bottom: 10px;
+      }
+    }
+
+    /* ================= DARK MODE TABLE TEXT FIX ================= */
+
+    /* Semua teks default table */
+    body.dark table.table tbody td {
+      color: #e5e7eb !important; /* abu terang */
+    }
+
+    /* Kolom Email sedikit lebih soft */
+    body.dark table.table tbody td:nth-child(3) {
+      color: #cbd5f5 !important;
+    }
+
+    /* Kolom Nama lebih tegas */
+    body.dark table.table tbody td:nth-child(2) {
+      color: #f1f5f9 !important;
+      font-weight: 500;
+    }
+
+    /* ================= GLOBAL MODERN TABLE ================= */
+
+    /* Card wrapper */
+    .data-card {
+      border-radius: 20px;
+      padding: 24px;
+    }
+
+    /* Header area */
+    .data-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    /* Action buttons */
+    .data-actions .btn {
+      border-radius: 999px;
+      font-size: .8rem;
+      padding: 6px 14px;
+    }
+
+    /* Table modern */
+    .table-modern {
+      border-collapse: separate;
+      border-spacing: 0 8px;
+    }
+
+    /* Table row */
+    .table-modern tbody tr {
+      background: #ffffff;
+      transition: all .2s ease;
+    }
+
+    .table-modern tbody tr:hover {
+      transform: scale(1.01);
+      box-shadow: 0 10px 20px rgba(0,0,0,.08);
+    }
+
+    /* Dark mode */
+    body.dark .table-modern tbody tr {
+      background: linear-gradient(180deg,#0f172a,#020617);
+    }
+
+    body.dark .table-modern tbody tr:hover {
+      background: linear-gradient(180deg,#1e40af,#020617);
+    }
+
+    /* Cell */
+    .table-modern td,
+    .table-modern th {
+      padding: 14px 16px;
+      border: none;
+      vertical-align: middle;
+    }
+
+    /* Header */
+    .table-modern thead th {
+      font-size: .75rem;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      color: #64748b;
+    }
+
+    /* Dark header */
+    body.dark .table-modern thead th {
+      color: #93c5fd;
+    }
+
+    /* Delete button */
+    .btn-delete {
+      border-radius: 999px;
+      font-size: .75rem;
+      padding: 4px 12px;
+    }
+
+    /* ================= SIDEBAR LOGO ================= */
+    .sidebar-brand{
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+    }
+
+    .sidebar-logo{
+      width:56px;
+      height:auto;
+      filter:drop-shadow(0 4px 10px rgba(0,0,0,.35));
+    }
+
+    @media(max-width:767px){
+      .sidebar-logo{
+        width:48px;
+      }
+    }
+
+
+
   </style>
 </head>
 
@@ -164,7 +534,7 @@
 <div class="topbar">
   <button onclick="toggleSidebar()">☰</button>
   <div class="topbar-title">UNIVERSITAS PAMULANG</div>
-  <button title="Dark mode (coming soon)">🌙</button>
+  <button onclick="toggleDark()">🌙</button>
 </div>
 
 <div class="container-fluid">
@@ -172,17 +542,27 @@
 
     <!-- SIDEBAR -->
     <aside id="sidebar" class="col-md-3 col-lg-2 sidebar p-3">
-      <h5 class="fw-bold mb-4">🎓 UNPAM</h5>
+      <div class="sidebar-brand text-center mb-4">
+          <img src="{{ url_for('static', filename='images/unpam.png') }}"
+            class="sidebar-logo mb-2">
+        <div class="fw-bold">UNPAM</div>
+      </div>
 
-      <a href="/dashboard" class="active">
+      <a href="/dashboard"
+        class="{% if request.path == '/dashboard' %}active{% endif %}">
         <i class="bi bi-speedometer2"></i> Dashboard
       </a>
-      <a href="/mahasiswa">
+
+      <a href="/mahasiswa"
+        class="{% if request.path == '/mahasiswa' %}active{% endif %}">
         <i class="bi bi-table"></i> Data Mahasiswa
       </a>
-      <a href="/add">
+
+      <a href="/add"
+        class="{% if request.path == '/add' %}active{% endif %}">
         <i class="bi bi-plus-circle"></i> Tambah Data
       </a>
+
 
       <hr>
 
@@ -193,15 +573,26 @@
         <i class="bi bi-file-earmark-excel"></i> Export Excel
       </a>
 
-      <form action="/import/csv" method="post" enctype="multipart/form-data" class="mt-3">
-        <input type="file" name="file" class="form-control form-control-sm mb-2" required>
-        <button class="btn btn-success btn-sm w-100">Import CSV</button>
+      <form action="/import/csv" method="post" enctype="multipart/form-data" class="import-box">
+        <label class="file-label">
+          📁 Pilih File CSV
+          <input type="file" name="file" accept=".csv" required>
+        </label>
+        <button class="btn btn-import csv">
+          ⬆ Import CSV
+        </button>
       </form>
 
-      <form action="/import/excel" method="post" enctype="multipart/form-data" class="mt-2">
-        <input type="file" name="file" class="form-control form-control-sm mb-2" required>
-        <button class="btn btn-primary btn-sm w-100">Import Excel</button>
+      <form action="/import/excel" method="post" enctype="multipart/form-data" class="import-box">
+        <label class="file-label">
+          📁 Pilih File Excel
+          <input type="file" name="file" accept=".xlsx" required>
+        </label>
+        <button class="btn btn-import excel">
+          ⬆ Import Excel
+        </button>
       </form>
+
 
       <hr>
 
@@ -222,19 +613,24 @@
 function toggleSidebar(){
   const sidebar = document.getElementById("sidebar");
   const overlay = document.getElementById("overlay");
-
   sidebar.classList.toggle("hide");
-
   if(window.innerWidth < 768){
     overlay.classList.toggle("show");
   }
 }
 
-/* Initial state */
+function toggleDark(){
+  document.body.classList.toggle("dark");
+  localStorage.setItem("darkMode", document.body.classList.contains("dark"));
+}
+
+if(localStorage.getItem("darkMode")==="true"){
+  document.body.classList.add("dark");
+}
+
 window.addEventListener("load", ()=>{
   const sidebar = document.getElementById("sidebar");
   const overlay = document.getElementById("overlay");
-
   if(window.innerWidth < 768){
     sidebar.classList.add("hide");
   }else{

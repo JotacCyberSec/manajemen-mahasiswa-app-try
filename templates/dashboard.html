@@ -1,60 +1,72 @@
 {% extends "base_dashboard.html" %}
 {% block content %}
 
+<!-- ================= HEADER ================= -->
 <div class="mb-4">
   <h3 class="fw-bold mb-1">Dashboard</h3>
   <p class="text-muted mb-0">Ringkasan data & analisis mahasiswa</p>
 </div>
 
-<!-- STAT CARDS -->
-<div class="row g-3 mb-4">
+<!-- ================= STAT CARDS ================= -->
+<div class="row g-3 g-lg-4 mb-4">
 
-  <div class="col-6 col-lg-3">
-    <div class="card p-3 text-center">
-      <div class="fw-bold fs-4 text-primary">{{ stats.total }}</div>
+  <!-- TOTAL MAHASISWA -->
+  <div class="col-12 col-sm-6 col-lg-3">
+    <div class="card h-100 p-4 d-flex align-items-center justify-content-center text-center">
+      <div class="stat-icon bg-blue mb-3">
+        <i class="bi bi-people"></i>
+      </div>
+      <div class="stat-value">{{ stats.total }}</div>
       <div class="text-muted small">Total Mahasiswa</div>
     </div>
   </div>
 
-  <div class="col-6 col-lg-3">
-    <div class="card p-3 text-center">
-      <div class="fw-bold fs-4 text-primary">{{ stats.jurusan }}</div>
+  <!-- TOTAL JURUSAN -->
+  <div class="col-12 col-sm-6 col-lg-3">
+    <div class="card h-100 p-4 d-flex align-items-center justify-content-center text-center">
+      <div class="stat-icon bg-green mb-3">
+        <i class="bi bi-mortarboard"></i>
+      </div>
+      <div class="stat-value">{{ stats.jurusan }}</div>
       <div class="text-muted small">Total Jurusan</div>
     </div>
   </div>
 
-  <div class="col-6 col-lg-3">
-    <div class="card p-3 text-center">
-      <div class="fw-bold fs-4 text-primary">{{ stats.avg_nim }}</div>
+  <!-- RATA-RATA NIM -->
+  <div class="col-12 col-sm-6 col-lg-3">
+    <div class="card h-100 p-4 d-flex align-items-center justify-content-center text-center">
+      <div class="stat-icon bg-purple mb-3">
+        <i class="bi bi-hash"></i>
+      </div>
+      <div class="stat-value">{{ stats.avg_nim }}</div>
       <div class="text-muted small">Rata-rata Panjang NIM</div>
     </div>
   </div>
 
-  <div class="col-6 col-lg-3">
-    <div class="card p-3 text-center">
-      <div class="fw-bold fs-6 text-primary">{{ stats.last_update }}</div>
+  <!-- UPDATE TERAKHIR -->
+  <div class="col-12 col-sm-6 col-lg-3">
+    <div class="card h-100 p-4 d-flex align-items-center justify-content-center text-center">
+      <div class="stat-icon bg-orange mb-3">
+        <i class="bi bi-clock-history"></i>
+      </div>
+      <div class="fw-semibold small">{{ stats.last_update }}</div>
       <div class="text-muted small">Update Terakhir</div>
     </div>
   </div>
 
 </div>
 
-<!-- SEARCH + DARK MODE -->
+<!-- ================= SEARCH ================= -->
 <div class="card p-4 mb-4">
-  <div class="row g-3 align-items-center">
-    <div class="col-md-8">
-      <input id="searchInput" class="form-control"
-             placeholder="🔍 Cari NIM atau Nama (Linear Search O(n))">
-    </div>
-    <div class="col-md-4 text-md-end">
-      <button onclick="toggleDark()" class="btn btn-outline-dark rounded-pill">
-        🌙 Dark Mode
-      </button>
-    </div>
+  <div class="search-box">
+    <i class="bi bi-search"></i>
+    <input id="searchInput"
+           class="form-control"
+           placeholder="Cari NIM atau Nama (Linear Search O(n))">
   </div>
 </div>
 
-<!-- SEARCH RESULT -->
+<!-- ================= SEARCH RESULT ================= -->
 <div class="card p-4 mb-4">
   <h6 class="fw-bold mb-3">Hasil Pencarian</h6>
 
@@ -64,17 +76,21 @@
         <tr>
           <th>NIM</th>
           <th>Nama</th>
-          <th>Email</th>
+          <th class="d-none d-md-table-cell">Email</th>
           <th>Jurusan</th>
         </tr>
       </thead>
       <tbody id="searchTable">
         {% for s in students %}
         <tr>
-          <td>{{ s.nim }}</td>
+          <td class="fw-semibold">{{ s.nim }}</td>
           <td>{{ s.name }}</td>
-          <td>{{ s.email }}</td>
-          <td>{{ s.major }}</td>
+          <td class="d-none d-md-table-cell">{{ s.email }}</td>
+          <td>
+            <span class="badge bg-primary-subtle text-primary rounded-pill px-3">
+              {{ s.major }}
+            </span>
+          </td>
         </tr>
         {% endfor %}
       </tbody>
@@ -82,34 +98,35 @@
   </div>
 </div>
 
-<!-- ALGORITHM INFO -->
+<!-- ================= ALGORITHM INFO ================= -->
 <div class="card p-4">
-  <h6 class="fw-bold mb-2">🧠 Informasi Algoritma</h6>
-  <ul class="mb-0 small">
-    <li>Pencarian Data: <b>Linear Search</b> → O(n)</li>
-    <li>Sorting Data: <b>Merge Sort</b> → O(n log n)</li>
-    <li>File I/O (JSON): O(n)</li>
-  </ul>
+  <h6 class="fw-bold mb-3">🧠 Informasi Algoritma</h6>
+
+  <div class="row g-3 small">
+    <div class="col-12 col-md-4">
+      🔍 <b>Pencarian Data</b><br>
+      Linear Search<br>
+      <code>O(n)</code>
+    </div>
+    <div class="col-12 col-md-4">
+      🔀 <b>Sorting Data</b><br>
+      <span class="text-danger fw-semibold">Sesuai implementasi</span>
+    </div>
+    <div class="col-12 col-md-4">
+      💾 <b>File I/O (JSON)</b><br>
+      <code>O(n)</code>
+    </div>
+  </div>
 </div>
 
+<!-- ================= SCRIPT ================= -->
 <script>
-/* SEARCH (LINEAR SEARCH SIMULATION) */
 document.getElementById("searchInput").addEventListener("keyup", function() {
   const q = this.value.toLowerCase();
   document.querySelectorAll("#searchTable tr").forEach(row => {
     row.style.display = row.innerText.toLowerCase().includes(q) ? "" : "none";
   });
 });
-
-/* DARK MODE */
-function toggleDark() {
-  document.body.classList.toggle("dark");
-  localStorage.setItem("darkMode", document.body.classList.contains("dark"));
-}
-
-if (localStorage.getItem("darkMode") === "true") {
-  document.body.classList.add("dark");
-}
 </script>
 
 {% endblock %}

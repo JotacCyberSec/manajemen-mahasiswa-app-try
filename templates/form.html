@@ -1,51 +1,48 @@
-{% extends "base_app.html" %}
-
+{% extends "base_dashboard.html" %}
 {% block content %}
 
-<div class="row justify-content-center">
-  <div class="col-lg-8">
+<div class="d-flex justify-content-between align-items-center mb-4">
+  <div>
+    <h4 class="fw-bold mb-1">Tambah Mahasiswa</h4>
+    <p class="text-muted mb-0">Masukkan data mahasiswa baru</p>
+  </div>
+  <a href="/mahasiswa" class="btn btn-outline-secondary rounded-pill">
+    ← Kembali
+  </a>
+</div>
 
-    <div class="card p-4">
-      <div class="d-flex justify-content-between align-items-center mb-4">
-        <h4 class="fw-bold mb-0">Tambah Mahasiswa</h4>
-        <a href="/mahasiswa" class="btn btn-outline-secondary rounded-pill">
-          ← Kembali
-        </a>
+<div class="card p-4">
+
+  <form method="post">
+    <div class="row g-3">
+
+      <div class="col-md-6">
+        <label class="form-label">NIM</label>
+        <input class="form-control" name="nim" required>
       </div>
 
-      <form method="post">
-        <div class="row g-3">
+      <div class="col-md-6">
+        <label class="form-label">Nama</label>
+        <input class="form-control" name="name" required>
+      </div>
 
-          <div class="col-md-6">
-            <label class="form-label">NIM</label>
-            <input class="form-control" name="nim" required>
-          </div>
+      <div class="col-md-6">
+        <label class="form-label">Email</label>
+        <input type="email" class="form-control" name="email" required>
+      </div>
 
-          <div class="col-md-6">
-            <label class="form-label">Nama</label>
-            <input class="form-control" name="name" required>
-          </div>
-
-          <div class="col-md-6">
-            <label class="form-label">Email</label>
-            <input class="form-control" name="email" required>
-          </div>
-
-          <div class="col-md-6">
-            <label class="form-label">Jurusan</label>
-            <input class="form-control" name="major" required>
-          </div>
-
-        </div>
-
-        <button class="btn btn-primary w-100 rounded-pill mt-4">
-          💾 Simpan Data
-        </button>
-      </form>
+      <div class="col-md-6">
+        <label class="form-label">Jurusan</label>
+        <input class="form-control" name="major" required>
+      </div>
 
     </div>
 
-  </div>
+    <button class="btn btn-primary w-100 rounded-pill mt-4 py-2">
+      💾 Simpan Data
+    </button>
+  </form>
+
 </div>
 
 {% endblock %}
